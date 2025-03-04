@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option Calculator - Models</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <!-- Logo on left (smaller size) -->
+    <div class="logo-left">
+      <a href="welcome.html">
+        <svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="0" width="60" height="60" fill="none" stroke="white" stroke-width="2" />
+          <text x="5" y="45" font-size="40" fill="red" font-family="Arial, sans-serif">O</text>
+          <text x="30" y="45" font-size="40" fill="white" font-family="Arial, sans-serif">s</text>
+        </svg>
+      </a>
+    </div>
+    <!-- Menu on right -->
+    <div class="menu-wrapper">
+      <input type="checkbox" id="menu-toggle" />
+      <label for="menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <nav class="nav">
+        <ul>
+          <li class="nav-group">
+            <a href="welcome.html">Home</a>
+            <a href="description.html">Description</a>
+            <a href="notes.html">Notes</a>
+            <a href="history.html">Trade History</a>
+          </li>
+          <li class="nav-group">
+            <select id="modelSelect">
+              <option value="simple">Simple Model</option>
+              <option value="advanced">Advanced Model</option>
+              <option value="custom">Custom Model</option>
+            </select>
+          </li>
+          <li class="nav-group dark-group">
+            <button id="dark-mode-button">Switch Theme</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section id="calculator" class="container">
+      <!-- Simple Model Section -->
+      <section id="simpleSection" class="model-section glass-panel">
+        <h3 class="model-title">OI</h3>
+        <div class="form-group">
+          <label for="simpleTrade">Trade Action:</label>
+          <select id="simpleTrade">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+          </select>
+          <label for="simpleType">Option Type:</label>
+          <select id="simpleType">
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+          </select>
+          <label for="s_iv">IV (%):</label>
+          <input type="number" id="s_iv" step="0.1" value="30" required>
+        </div>
+        <form id="simpleForm" class="form-grid">
+          <div class="form-item">
+            <label for="s_price">Option Price (P):</label>
+            <input type="number" id="s_price" step="0.01" value="5" required>
+          </div>
+          <div class="form-item">
+            <label for="s_delta">Delta (Δ):</label>
+            <input type="number" id="s_delta" step="0.01" value="0.5" required>
+          </div>
+          <div class="form-item">
+            <label for="s_atr">ATR:</label>
+            <input type="number" id="s_atr" step="0.01" value="2" required>
+          </div>
+          <div class="form-item">
+            <label for="s_tdays">Days Till Expiration:</label>
+            <input type="number" id="s_tdays" step="1" value="30" required>
+          </div>
+          <div class="form-item full-width">
+            <label for="s_maxRisk">Max Risk (%):</label>
+            <input type="range" id="s_maxRisk" min="5" max="50" step="1" value="20" oninput="document.getElementById('s_maxRisk_val').innerText = this.value + '%'">
+            <span id="s_maxRisk_val">20%</span>
+          </div>
+          <div class="form-item full-width">
+            <label for="s_multiplier">Reward Multiplier (x):</label>
+            <input type="range" id="s_multiplier" min="1" max="10" step="0.1" value="2" oninput="document.getElementById('s_multiplier_val').innerText = this.value + 'x'">
+            <span id="s_multiplier_val">2x</span>
+          </div>
+          <div class="form-item full-width">
+            <button type="button" onclick="calculateSimple()">Calculate OI</button>
+          </div>
+        </form>
+        <div class="result" id="simpleResult"></div>
+      </section>
+
+      <!-- Advanced Model Section -->
+      <section id="advancedSection" class="model-section glass-panel" style="display:none;">
+        <h3 class="model-title">O<span class="red">I</span></h3>
+        <div class="form-group">
+          <label for="advancedTrade">Trade Action:</label>
+          <select id="advancedTrade">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+          </select>
+          <label for="advancedType">Option Type:</label>
+          <select id="advancedType">
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+          </select>
+        </div>
+        <!-- Basic Inputs Group -->
+        <div class="basic-inputs">
+          <div class="form-grid">
+            <div class="form-item">
+              <label for="a_price">Option Price (P):</label>
+              <input type="number" id="a_price" step="0.01" value="5" required>
+            </div>
+            <div class="form-item">
+              <label for="a_delta">Delta (Δ):</label>
+              <input type="number" id="a_delta" step="0.01" value="0.5" required>
+            </div>
+            <div class="form-item">
+              <label for="a_atr">ATR:</label>
+              <input type="number" id="a_atr" step="0.01" value="2" required>
+            </div>
+            <div class="form-item">
+              <label for="a_tdays">Days Till Expiration:</label>
+              <input type="number" id="a_tdays" step="1" value="30" required>
+            </div>
+            <div class="form-item">
+              <label for="a_iv">IV (%):</label>
+              <input type="number" id="a_iv" step="0.1" value="30" required>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <!-- Advanced Inputs Group -->
+        <div class="advanced-inputs">
+          <div class="form-grid">
+            <div class="form-item">
+              <label for="a_theta">Theta (|Θ|):</label>
+              <input type="number" id="a_theta" step="0.01" value="0.04" required>
+            </div>
+            <div class="form-item">
+              <label for="a_ms">Market Sentiment:</label>
+              <input type="number" id="a_ms" step="1" value="50" required>
+            </div>
+            <div class="form-item">
+              <label for="a_stock">Stock Price (S):</label>
+              <input type="number" id="a_stock" step="0.01" value="50" required>
+            </div>
+            <div class="form-item">
+              <label for="a_oi">Open Interest (OI):</label>
+              <input type="number" id="a_oi" step="1" value="100" required>
+            </div>
+            <div class="form-item">
+              <label for="a_contracts">Contracts:</label>
+              <input type="number" id="a_contracts" step="1" value="1" required>
+            </div>
+          </div>
+        </div>
+        <!-- Slider Inputs for Advanced Model -->
+        <div class="form-item full-width">
+          <label for="a_maxRisk">Max Risk (%):</label>
+          <input type="range" id="a_maxRisk" min="5" max="50" step="1" value="20" oninput="document.getElementById('a_maxRisk_val').innerText = this.value + '%'">
+          <span id="a_maxRisk_val">20%</span>
+        </div>
+        <div class="form-item full-width">
+          <label for="a_multiplier">Reward Multiplier (x):</label>
+          <input type="range" id="a_multiplier" min="1" max="10" step="0.1" value="2" oninput="document.getElementById('a_multiplier_val').innerText = this.value + 'x'">
+          <span id="a_multiplier_val">2x</span>
+        </div>
+        <div class="form-item full-width">
+          <button type="button" onclick="calculateAdvanced()">Calculate OI</button>
+        </div>
+        <div class="result" id="advancedResult"></div>
+      </section>
+
+      <!-- Custom Model Section -->
+      <section id="customSection" class="model-section glass-panel" style="display:none;">
+        <h3 class="model-title">OI<sup class="red">+</sup></h3>
+        <div class="form-group">
+          <label for="customTrade">Trade Action:</label>
+          <select id="customTrade">
+            <option value="buy">Buy</option>
+            <option value="sell">Sell</option>
+          </select>
+          <label for="customType">Option Type:</label>
+          <select id="customType">
+            <option value="call">Call</option>
+            <option value="put">Put</option>
+          </select>
+        </div>
+        <!-- Two-column Layout for Custom Model -->
+        <div class="custom-basic-group">
+          <!-- Left Column: Inputs with Weight Sliders -->
+          <div class="custom-column">
+            <label for="c_iv">IV (%):</label>
+            <input type="number" id="c_iv" step="0.1" value="30" required>
+            <small>Weight:</small>
+            <input type="range" id="w_iv" min="0.1" max="3" step="0.1" value="1" oninput="document.getElementById('w_iv_val').innerText = this.value;">
+            <span id="w_iv_val">1</span>
+            
+            <label for="c_delta">Delta (Δ):</label>
+            <input type="number" id="c_delta" step="0.01" value="0.5" required>
+            <small>Weight:</small>
+            <input type="range" id="w_delta" min="0.1" max="3" step="0.1" value="1" oninput="document.getElementById('w_delta_val').innerText = this.value;">
+            <span id="w_delta_val">1</span>
+            
+            <label for="c_theta">Theta (|Θ|):</label>
+            <input type="number" id="c_theta" step="0.01" value="0.04" required>
+            <small>Weight:</small>
+            <input type="range" id="w_theta" min="0.1" max="3" step="0.1" value="1" oninput="document.getElementById('w_theta_val').innerText = this.value;">
+            <span id="w_theta_val">1</span>
+            
+            <label for="c_oi">Open Interest (OI):</label>
+            <input type="number" id="c_oi" step="1" value="100" required>
+            <small>Weight:</small>
+            <input type="range" id="w_oi" min="0.1" max="3" step="0.1" value="1" oninput="document.getElementById('w_oi_val').innerText = this.value;">
+            <span id="w_oi_val">1</span>
+          </div>
+          <!-- Right Column: Remaining Inputs -->
+          <div class="custom-column">
+            <label for="c_price">Option Price (P):</label>
+            <input type="number" id="c_price" step="0.01" value="5" required>
+            
+            <label for="c_contracts">Contracts:</label>
+            <input type="number" id="c_contracts" step="1" value="1" required>
+            
+            <label for="c_tdays">Days Till Expiration:</label>
+            <input type="number" id="c_tdays" step="1" value="30" required>
+            
+            <label for="c_ms">Sentiment:</label>
+            <select id="c_ms" required>
+              <option value="Bullish">Bullish</option>
+              <option value="Bearish">Bearish</option>
+              <option value="Consolidate">Consolidate</option>
+            </select>
+          </div>
+        </div>
+        <!-- Divider Line -->
+        <hr>
+        <!-- Slider Inputs for Custom Model -->
+        <div class="form-item full-width">
+          <label for="c_maxRisk">Max Risk (%):</label>
+          <input type="range" id="c_maxRisk" min="5" max="50" step="1" value="20" oninput="document.getElementById('c_maxRisk_val').innerText = this.value + '%'">
+          <span id="c_maxRisk_val">20%</span>
+        </div>
+        <div class="form-item full-width">
+          <label for="c_multiplier">Reward Multiplier (x):</label>
+          <input type="range" id="c_multiplier" min="1" max="10" step="0.1" value="2" oninput="document.getElementById('c_multiplier_val').innerText = this.value + 'x'">
+          <span id="c_multiplier_val">2x</span>
+        </div>
+        <div class="form-item full-width">
+          <button type="button" onclick="calculateCustom()">Calculate OI<sup class="red">+</sup></button>
+        </div>
+        <div class="result" id="customResult"></div>
+        <!-- Sensitivity Chart for Custom Model -->
+        <div class="chart-container">
+          <h4>Sensitivity Chart (Detail on Y-axis)</h4>
+          <canvas id="sensitivityChart"></canvas>
+        </div>
+      </section>
+
+      <!-- Summary Chart Section -->
+      <section class="model-section glass-panel">
+        <div class="chart-container small-chart">
+          <canvas id="summaryChart"></canvas>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

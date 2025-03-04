@@ -1,0 +1,468 @@
+/* CSS Variables for Theming */
+:root {
+  --page-light: #ffffff;       /* White background for light mode */
+  --page-dark: #000000;        /* Black background for dark mode */
+  --text-light: #333333;       /* Gray headings for light mode */
+  --text-dark: #e0e0e0;        /* Gray headings for dark mode */
+  --panel-light: #e0e0e0;       /* Light gray panels for light mode */
+  --panel-dark: #222222;       /* Dark panels for dark mode */
+  --border-light: #dddddd;
+  --border-dark: #444444;
+  --accent: #ff4081;
+}
+
+/* Light Mode */
+body {
+  background-color: var(--page-light);
+  color: var(--text-light);
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: var(--page-dark);
+  color: var(--text-dark);
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Minimal Header for Welcome Page */
+.minimal-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5rem 1rem;
+}
+
+/* Header for Other Pages */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--panel-light);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+body.dark-mode header {
+  background: var(--panel-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+/* Logo for Welcome Page (centered large SVG) */
+.logo {
+  text-align: center;
+}
+.logo svg {
+  width: 120px;
+  height: 120px;
+}
+
+/* Logo for Header on Other Pages (inline SVG on left) */
+.logo-left {
+  margin-right: auto;
+}
+.logo-left svg {
+  width: 60px;
+  height: 60px;
+}
+
+/* Menu Wrapper for Header on Other Pages (on right) */
+.menu-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Hidden Checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* Hamburger Icon */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 30px;
+  height: 24px;
+}
+.hamburger span {
+  display: block;
+  height: 3px;
+  background: var(--text-light);
+  border-radius: 2px;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform-origin: center;
+}
+body.dark-mode .hamburger span {
+  background: var(--text-dark);
+}
+#menu-toggle:checked + .hamburger span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+#menu-toggle:checked + .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+#menu-toggle:checked + .hamburger span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Navigation Menu */
+.nav {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px;
+  min-height: 50vh;
+  background: var(--panel-light);
+  border: 1px solid var(--border-light);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+body.dark-mode .nav {
+  background: var(--panel-dark);
+  border: 1px solid var(--border-dark);
+}
+#menu-toggle:checked + .hamburger + .nav {
+  display: flex;
+}
+
+/* Navigation List & Groups */
+.nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav .nav-group {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--border-light);
+  padding: 0.5rem 0;
+}
+body.dark-mode .nav .nav-group {
+  border-bottom: 1px solid var(--border-dark);
+}
+.nav .nav-group a,
+.nav .nav-group button,
+.nav .nav-group select {
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: 500;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+body.dark-mode .nav .nav-group a,
+body.dark-mode .nav .nav-group button,
+body.dark-mode .nav .nav-group select {
+  color: var(--text-dark);
+}
+.nav .nav-group a:hover,
+.nav .nav-group button:hover,
+.nav .nav-group select:hover {
+  background: var(--accent);
+  color: #fff;
+}
+.dark-group {
+  margin-top: auto;
+}
+
+/* Welcome Content */
+.welcome-content {
+  text-align: center;
+  padding-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Welcome Box: Gray square container in the middle of Welcome page */
+.welcome-box {
+  background: var(--panel-light);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+
+/* Page-specific header (for Description/Notes pages) */
+.page-header {
+  background: var(--panel-light);
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+body.dark-mode .page-header {
+  background: var(--panel-dark);
+  border-bottom: 1px solid var(--border-dark);
+}
+.page-header h1 {
+  color: var(--text-light);
+}
+
+/* Dashboard Panels */
+.model-section {
+  background: var(--panel-light);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+}
+body.dark-mode .model-section {
+  background: var(--panel-dark);
+  border: 1px solid var(--border-dark);
+}
+.model-section .model-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-light);
+}
+body.dark-mode .model-section .model-title {
+  color: var(--text-dark);
+}
+.red {
+  color: red;
+}
+
+/* Form Grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+.form-group label {
+  font-weight: bold;
+}
+
+/* Custom Model Layout (Two-column layout) */
+.custom-basic-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* Input Styling */
+input[type="number"],
+input[type="text"],
+textarea,
+select {
+  padding: 8px;
+  border: 1px solid var(--border-light);
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-top: 5px;
+  outline: none;
+  background: #fff;
+  color: #000;
+  transition: box-shadow 0.2s;
+}
+body.dark-mode input[type="number"],
+body.dark-mode input[type="text"],
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #222;
+  color: #fff;
+  border: 1px solid var(--border-dark);
+}
+input[type="number"]:focus,
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 8px rgba(0,119,255,0.5);
+}
+
+/* Range Slider Styling */
+input[type="range"] {
+  width: 100%;
+  max-width: 100px;
+  margin-right: 5px;
+}
+
+/* Button Styling */
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+button:hover {
+  transform: scale(1.05);
+  background: #e73370;
+}
+
+/* Result Panel */
+.result {
+  margin-top: 10px;
+  padding: 15px;
+  background: var(--panel-light);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+body.dark-mode .result {
+  background: var(--panel-dark);
+  border: 1px solid var(--border-dark);
+  color: var(--text-dark);
+}
+
+/* Chart Container */
+.chart-container {
+  margin-top: 20px;
+  padding: 10px;
+  background: var(--panel-light);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+body.dark-mode .chart-container {
+  background: var(--panel-dark);
+  border: 1px solid var(--border-dark);
+}
+.chart-container.small-chart {
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+/* Notes Page Styling */
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 2rem auto;
+  gap: 20px;
+}
+.note-editor {
+  flex: 2;
+  min-width: 300px;
+}
+.note-editor input[type="text"],
+.note-editor textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  background: #fff;
+  color: #000;
+}
+body.dark-mode .note-editor input[type="text"],
+body.dark-mode .note-editor textarea {
+  background: #222;
+  color: #fff;
+  border: 1px solid var(--border-dark);
+}
+.notes-divider {
+  width: 2px;
+  background: var(--border-light);
+}
+body.dark-mode .notes-divider {
+  background: var(--border-dark);
+}
+.notes-filelist {
+  flex: 1;
+  min-width: 200px;
+  text-align: left;
+}
+.notes-filelist .file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+body.dark-mode .notes-filelist .file-item {
+  border-bottom: 1px solid var(--border-dark);
+}
+.notes-filelist .file-item button {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-left: 5px;
+}
+
+/* Trade History Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+table, th, td {
+  border: 1px solid var(--border-light);
+}
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+body.dark-mode table, body.dark-mode th, body.dark-mode td {
+  border: 1px solid var(--border-dark);
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 16px;
+  }
+  .container {
+    padding: 10px;
+  }
+  .model-section {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  button {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+  }
+  input[type="number"],
+  input[type="text"],
+  textarea,
+  select {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+  .chart-container.small-chart {
+    max-width: 100%;
+    margin: 15px auto;
+  }
+}
